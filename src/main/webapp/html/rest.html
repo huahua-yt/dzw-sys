@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>restful</title>
+</head>
+<body>
+	<button id="query">查询全部(GET)</button>
+	&nbsp;
+	<button id="load">读取(GET)</button>
+	&nbsp;
+	<button id="remove">删除(DELETE)</button>
+	&nbsp;
+	<button id="add">新增(POST)</button>
+	&nbsp;
+	<button id="update">修改(PUT)</button>
+</body>
+<script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+	$("#query").click(function() {
+		$.getJSON("/springmvc_4/api/users",function(data){
+			alert(JSON.stringify(data));
+		});
+	});
+
+	$("#load").click(function() {
+		var userName=window.prompt("请输入用户名","");
+		$.getJSON(`/springmvc_4/api/users/user/${userName}`,function(data){
+			alert(JSON.stringify(data));
+		});
+	});
+
+	$("#remove").click(function() {
+		var userName=window.prompt("请输入用户名","");
+		$.ajax(`/springmvc_4/api/users/user/${userName}`,{
+			type:"delete",
+			dataType:"json",
+			success:function(data){
+				alert(JSON.stringify(data));
+			}
+		});
+	});
+
+	$("#add").click(function() {
+		var user={
+				"userName":"xiaohuang",
+				"userPwd":123
+		};
+		$.ajax(`/springmvc_4/api/users/user`,{
+			type:"post",
+			dataType:"json",
+			contentType:"application/json",
+			data:JSON.stringify(user),
+			success:function(data){
+				alert(JSON.stringify(data));
+			}
+		});
+	});
+
+	$("#update").click(function() {
+		
+		var user={
+				"userId":1000,
+				"userName":"ahuang",
+				"userPwd":456
+		};
+		$.ajax(`/springmvc_4/api/users/user`,{
+			type:"put",
+			dataType:"json",
+			contentType:"application/json",
+			data:JSON.stringify(user),
+			success:function(data){
+				alert(JSON.stringify(data));
+			}
+		});
+
+	});
+</script>
+</html>
